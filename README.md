@@ -27,6 +27,7 @@ cd DarknessOnion
 sudo python3 darknessonion.py
 ```
 
+![Usage](usagelogo.png)
 
 ## Requirements
 
