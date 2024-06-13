@@ -45,10 +45,10 @@ def otherkontrol(hostnamefile, errorsay):
             print(Style.RESET_ALL)
     elif errorsay == 0:
         errorsay = 1
-        getlink()
+        othergetlink()
     elif errorsay == 1:
         errorsay = 2
-        getlink()
+        othergetlink()
     else:
         errorsay = 0
         if os.path.exists(hostnamefile):
