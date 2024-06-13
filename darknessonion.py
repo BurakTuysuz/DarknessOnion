@@ -4,6 +4,63 @@ import subprocess
 
 from colorama import Fore, Style
 
+tamerrorsay = 0
+tamothersay = 0
+
+
+def kontrol(hostnamefile, errorsay):
+    if os.path.exists(hostnamefile):
+        with open(hostnamefile, "r") as readfile:
+            readhostname = readfile.read()
+            print("\n")
+            print(Fore.RED)
+            print("Onion Link: " + readhostname)
+            print(Style.RESET_ALL)
+    elif errorsay == 0:
+        errorsay = 1
+        getlink()
+    elif errorsay == 1:
+        errorsay = 2
+        getlink()
+    else:
+        errorsay = 0
+        if os.path.exists(hostnamefile):
+            with open(hostnamefile, "r") as readfile:
+                readhostname = readfile.read()
+                print("\n")
+                print(Fore.RED)
+                print("Onion Link: " + readhostname)
+                print(Style.RESET_ALL)
+        else:
+            print("Try Again - hidden_service folder or hostname file was not found This error is not about us")
+
+
+def otherkontrol(hostnamefile, errorsay):
+    if os.path.exists(hostnamefile):
+        with open(hostnamefile, "r") as readfile:
+            readhostname = readfile.read()
+            print("\n")
+            print(Fore.RED)
+            print("Onion Link: " + readhostname)
+            print(Style.RESET_ALL)
+    elif errorsay == 0:
+        errorsay = 1
+        getlink()
+    elif errorsay == 1:
+        errorsay = 2
+        getlink()
+    else:
+        errorsay = 0
+        if os.path.exists(hostnamefile):
+            with open(hostnamefile, "r") as readfile:
+                readhostname = readfile.read()
+                print("\n")
+                print(Fore.RED)
+                print("Onion Link: " + readhostname)
+                print(Style.RESET_ALL)
+        else:
+            print("Try Again - other_hidden_service folder or hostname file was not found This error is not about us")
+
 
 def getlink():
     torconfig = """## Configuration file for a typical Tor user
@@ -214,17 +271,9 @@ def getlink():
 
         subprocess.run(["service", "tor", "stop"], stderr=subprocess.DEVNULL)
         subprocess.run(["service", "tor", "start"], stderr=subprocess.DEVNULL)
-        hostnamefile = "/var/lib/tor/hidden_service/hostname"
-        if os.path.exists(hostnamefile):
-            with open(hostnamefile, "r") as readfile:
-                readhostname = readfile.read()
-                print("\n")
-                print(Fore.RED)
-                print("Onion Link: " + readhostname)
-                print(Style.RESET_ALL)
-        else:
-            print("Try Again - hidden_service folder or hostname file was not found This error is not related to us")
-
+        fullhostnamefile = "/var/lib/tor/hidden_service/hostname"
+        global tamerrorsay
+        kontrol(fullhostnamefile, tamerrorsay)
 
 
     else:
@@ -442,17 +491,9 @@ def othergetlink():
 
         subprocess.run(["service", "tor", "stop"], stderr=subprocess.DEVNULL)
         subprocess.run(["service", "tor", "start"], stderr=subprocess.DEVNULL)
-        hostnamefile = "/var/lib/tor/other_hidden_service/hostname"
-        if os.path.exists(hostnamefile):
-            with open(hostnamefile, "r") as readfile:
-                readhostname = readfile.read()
-                print("\n")
-                print(Fore.RED)
-                print("Onion Link: " + readhostname)
-                print(Style.RESET_ALL)
-        else:
-            print("Try Again - other_hidden_service folder or hostname file was not found This error is not related "
-                  "to us")
+        fullhostnamefile = "/var/lib/tor/other_hidden_service/hostname"
+        global tamothersay
+        otherkontrol(fullhostnamefile, tamothersay)
 
 
 
@@ -465,22 +506,36 @@ def othergetlink():
 
 def newgetlink():
     deletehidden = "/var/lib/tor/hidden_service"
+    global tamerrorsay
     if os.path.exists(deletehidden):
         shutil.rmtree(deletehidden)
         getlink()
-
-    else:
+    elif tamerrorsay == 0:
+        tamerrorsay = 1
         getlink()
+    elif tamerrorsay == 1:
+        tamerrorsay = 2
+        getlink()
+    else:
+        tamerrorsay = 0
+        print("hidden_service folder file not found. Try option 1 first")
 
 
 def othernewgetlink():
     deleteotherhidden = "/var/lib/tor/other_hidden_service"
+    global tamothersay
     if os.path.exists(deleteotherhidden):
         shutil.rmtree(deleteotherhidden)
         othergetlink()
-
-    else:
+    elif tamothersay == 0:
+        tamothersay = 1
         othergetlink()
+    elif tamothersay == 1:
+        tamothersay = 2
+        othergetlink()
+    else:
+        tamothersay = 0
+        print("other_hidden_service folder file not found. Try option 2 first")
 
 
 if __name__ == '__main__':
