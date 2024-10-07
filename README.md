@@ -35,4 +35,4 @@ For Debian and Debian-based distributions only
 ## Legal Disclaimer
 
 
-This tool was created for education. The producer is not responsible for incorrect use. You agree that you use this software at your own risk. 
+This tool was created for education. The producer is not responsible for incorrect use.
